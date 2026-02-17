@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christopher Åhl - Tech Leadership & Innovation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --text: #333;
+            --text-secondary: #555;
+            --light: #ecf0f1;
+            --white: #ffffff;
+            --shadow: rgba(0,0,0,0.1);
+            --shadow-hover: rgba(0,0,0,0.15);
+        }
+
+        [data-theme="dark"] {
+            --primary: #1a252f;
+            --accent: #3498db;
+            --text: #e4e4e4;
+            --text-secondary: #b8b8b8;
+            --light: #1e2936;
+            --white: #2a3744;
+            --shadow: rgba(0,0,0,0.3);
+            --shadow-hover: rgba(0,0,0,0.5);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--light);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--shadow);
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        header p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            font-weight: 300;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            background: var(--white);
+            margin: 2rem 0;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px var(--shadow);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease;
+        }
+
+        section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px var(--shadow-hover);
+        }
+
+        h2 {
+            color: var(--text);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        h3 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        ul li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        ul li:hover {
+            padding-left: 2rem;
+            color: var(--text);
+        }
+
+        ul li:hover:before {
+            transform: translateX(0.3rem);
+        }
+
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact a {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: left 0.3s ease;
+        }
+
+        .contact a:hover:before {
+            left: 100%;
+        }
+
+        .contact a:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            transition: color 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1.2rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .theme-toggle {
+                top: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: var(--accent);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            <span id="theme-icon">🌙</span>
+        </button>
+        <h1>Christopher Åhl</h1>
+        <p>Tech Leadership | Innovation | Event Orchestration</p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>About Me</h2>
+            <p>
+                I am a change-oriented professional who thrives in environments where complexity is high and collaboration 
+                is essential. At SEB, I work at the intersection of technology, leadership, and process improvement—helping 
+                teams navigate change, strengthen governance, and create clarity in situations that can otherwise feel overwhelming.
+            </p>
+            <p>
+                My strength lies in combining structure with communication. I work closely with technology teams, leadership, 
+                and support functions to improve processes, ensure people understand what's expected of them, and facilitate 
+                dialogue that bridges gaps between functions. Whether it's managing incidents, implementing new ways of working, 
+                or driving long-term improvement initiatives, I focus on maintaining engagement and momentum while keeping teams 
+                aligned and empowered.
+            </p>
+            <p>
+                Beyond process and governance, my passion lies in bringing people together through technology. I organize hackathons, 
+                lead large-scale tech events, and build platforms that empower teams to create. Technology isn't just what I do—it's 
+                how I think. I believe the best solutions come from collaboration, creativity, and a willingness to experiment.
+            </p>
+            <p>
+                I'm motivated by roles where I can contribute to long-term improvement, support others' success, and be part of 
+                a culture that values professionalism, learning, and trust. Based in Nacka with my wife and three kids, I balance 
+                my tech work with a love for the outdoors, staying active, and exploring new places. Life is about building great 
+                things—both in code and beyond.
+            </p>
+        </section>
+
+        <section>
+            <h2>What I Do</h2>
+            
+            <h3>Change Management & Process Improvement at SEB</h3>
+            <p>
+                I work closely with technology teams, leadership, and support functions to navigate complexity and drive 
+                meaningful change. My focus is on strengthening governance, improving processes, and ensuring teams understand 
+                and can act on what's expected of them. I facilitate dialogue, manage incidents effectively, and create clarity 
+                in fast-moving environments—all while maintaining team engagement and momentum.
+            </p>
+
+            <h3>Technology Leadership in Finance</h3>
+            <p>
+                Working within banking technology, I focus on bridging the gap between business needs and technical 
+                solutions. My expertise spans operations, application hosting, networking infrastructure, and FinOps—helping 
+                teams optimize costs while maintaining performance and reliability.
+            </p>
+
+            <h3>AI Engineering & Innovation</h3>
+            <p>
+                I'm deeply involved in AI engineering, exploring how modern AI tools can transform workflows and empower teams. 
+                From building personal AI assistants to integrating AI into fintech operations, I'm constantly experimenting 
+                with what's possible at the cutting edge.
+            </p>
+
+            <h3>Hackathons & Community Building</h3>
+            <p>
+                I arrange and run hackathons and large-scale tech events that bring developers, designers, and innovators 
+                together. Community building is at the heart of what I do—creating spaces where people can learn, collaborate, 
+                and build things that matter.
+            </p>
+
+            <h3>Content & Media</h3>
+            <p>
+                With experience in video editing and content creation, I help teams communicate their stories effectively. 
+                Whether it's documenting events, creating technical content, or producing engaging media, I believe in the 
+                power of storytelling to connect and inspire.
+            </p>
+        </section>
+
+        <section>
+            <h2>Professional Focus</h2>
+            <ul>
+                <li>Change management and organizational transformation</li>
+                <li>Process improvement and governance frameworks</li>
+                <li>Incident management and operational excellence</li>
+                <li>Cross-functional facilitation and stakeholder alignment</li>
+                <li>Operations and application hosting architecture</li>
+                <li>Network infrastructure and security</li>
+                <li>FinOps and cloud cost optimization</li>
+                <li>AI engineering and workflow automation</li>
+                <li>Developer experience and productivity tools</li>
+                <li>Event planning and community building</li>
+                <li>Video editing and technical content creation</li>
+                <li>Fintech innovation and digital transformation</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Life Outside Tech</h2>
+            <p>
+                When I'm not working with technology, you'll find me staying active and exploring. I'm passionate about:
+            </p>
+            <ul>
+                <li><strong>Skiing</strong> – There's nothing like the mountains in winter</li>
+                <li><strong>The Archipelago</strong> – Stockholm's island life is unbeatable</li>
+                <li><strong>Training</strong> – Biking, gym, running—I love all forms of movement</li>
+                <li><strong>Food & Travel</strong> – Discovering new flavors and cultures</li>
+                <li><strong>Family</strong> – Quality time with my wife and three kids in Nacka</li>
+            </ul>
+            <p>
+                Life is about balance: building great tech, staying active, and enjoying the journey with the people you love.
+            </p>
+        </section>
+
+        <section>
+            <h2>Get in Touch</h2>
+            <p>
+                I'm always open to connecting with fellow tech enthusiasts, discussing event collaboration, 
+                or exploring new ideas in the fintech and developer space.
+            </p>
+            <div class="contact">
+                <a href="https://github.com/trollstaven" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/christopher-ahl/" target="_blank">LinkedIn</a>
+                <a href="mailto:christopher_ahl@icloud.com">Email</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Christopher Åhl. Built with curiosity and code.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const icon = document.getElementById('theme-icon');
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon with animation
+            icon.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                icon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+                icon.style.transform = 'rotate(0deg)';
+            }, 150);
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const icon = document.getElementById('theme-icon');
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                icon.textContent = '☀️';
+            }
+
+            // Add animation delay to sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
